@@ -10,6 +10,7 @@ use Yajra\DataTables\Html\Column;
 @endif
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
+use PDF;
 
 class {{ $config->modelNames->name }}DataTable extends DataTable
 {
@@ -22,7 +23,6 @@ class {{ $config->modelNames->name }}DataTable extends DataTable
     public function dataTable($query)
     {
         $dataTable = new EloquentDataTable($query);
-
         return $dataTable->addColumn('action', '{{ $config->modelNames->snakePlural }}.datatables_actions');
     }
 
@@ -47,25 +47,14 @@ class {{ $config->modelNames->name }}DataTable extends DataTable
         return $this->builder()
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->addAction(['width' => '120px', 'printable' => false])
-            ->parameters([
-                'dom'       => 'Bfrtip',
-                'stateSave' => true,
-                'order'     => [[0, 'desc']],
-                'buttons'   => [
-                    // Enable Buttons as per your need
-//                    ['extend' => 'create', 'className' => 'btn btn-default btn-sm no-corner',],
-//                    ['extend' => 'export', 'className' => 'btn btn-default btn-sm no-corner',],
-//                    ['extend' => 'print', 'className' => 'btn btn-default btn-sm no-corner',],
-//                    ['extend' => 'reset', 'className' => 'btn btn-default btn-sm no-corner',],
-//                    ['extend' => 'reload', 'className' => 'btn btn-default btn-sm no-corner',],
-                ],
-@if($config->options->localized)
-                'language' => [
-                    'url' => url('//cdn.datatables.net/plug-ins/1.10.12/i18n/English.json'),
-                ],
-@endif
-            ]);
+            ->addAction(['width' => '80px', 'printable' => false ,'responsivePriority'=>'100'])
+            ->parameters(array_merge(
+                config('datatables-buttons.parameters'), [
+                    'language' => json_decode(
+                        file_get_contents(base_path('resources/lang/'.app()->getLocale().'/datatable.json')
+                        ),true)
+                ]
+            ));
     }
 
     /**
@@ -88,5 +77,16 @@ class {{ $config->modelNames->name }}DataTable extends DataTable
     protected function filename(): string
     {
         return '{{ $config->modelNames->snakePlural }}_datatable_' . time();
+    }
+    
+    /**
+     * Export PDF using DOMPDF
+     * @return mixed
+     */
+    public function pdf()
+    {
+        $data = $this->getDataForPrint();
+        $pdf = PDF::loadView($this->printPreview, compact('data'));
+        return $pdf->download($this->filename().'.pdf');
     }
 }
