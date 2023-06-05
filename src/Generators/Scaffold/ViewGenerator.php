@@ -316,4 +316,39 @@ class ViewGenerator extends BaseGenerator
             }
         }
     }
+    
+    public function generateCustomField($fields)
+    {
+        $this->htmlFields = [];
+        $startSeparator = '<div class="d-flex flex-column col-sm-12 col-md-6">';
+        $endSeparator = '</div>';
+
+        foreach ($fields as $field) {
+            $dynamicVars = [
+                '$RANDOM_VARIABLE$' => 'var' . time() . rand() . 'ble',
+                '$FIELD_NAME$' => $field->name,
+                '$MODEL_NAME_SNAKE$' => $field->custom_field_model
+            ];
+            $field->htmlType = $field['type'];
+            $fieldTemplate = HTMLFieldGenerator::generateHTML($field, config('infyom.laravel_generator.templates', 'adminlte-templates'));
+
+            if (!empty($fieldTemplate)) {
+                foreach ($dynamicVars as $variable => $value) {
+                    $fieldTemplate = str_replace($variable, $value, $fieldTemplate);
+                }
+                $this->htmlFields[] = $fieldTemplate;
+            }
+        }
+
+        foreach ($this->htmlFields as $index => $field) {
+            if (round(count($this->htmlFields) / 2) == $index + 1) {
+                $this->htmlFields[$index] = $this->htmlFields[$index] . "\n" . $endSeparator . "\n" . $startSeparator;
+            }
+        }
+
+        $htmlFieldsString = implode("\n\n", $this->htmlFields);
+        $htmlFieldsString = $startSeparator . "\n" . $htmlFieldsString . "\n" . $endSeparator;
+
+        return $htmlFieldsString;
+    }
 }
