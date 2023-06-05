@@ -5,7 +5,7 @@
 namespace {{ $config->namespaces->repository }};
 
 use {{ $config->namespaces->model }}\{{ $config->modelNames->name }};
-use {{ $config->namespaces->app }}\Repositories\BaseRepository;
+use Prettus\Repository\Eloquent\BaseRepository;
 
 class {{ $config->modelNames->name }}Repository extends BaseRepository
 {
