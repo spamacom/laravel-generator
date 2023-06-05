@@ -1,7 +1,7 @@
 {
-    "name": "infyomlabs/laravel-generator",
+    "name": "spamacom/laravel-generator",
     "type": "library",
-    "description": "InfyOm Laravel Generator",
+    "description": "InfyOm Laravel Generator | Upgraded By Mouhammad Alali",
     "keywords": [
         "laravel",
         "api",
