@@ -89,8 +89,8 @@ if (!function_exists('get_template_file_path')) {
         $templateName = str_replace('.', '/', $templateName);
 
         $templatesPath = config(
-            'infyom.laravel_generator.path.templates_dir',
-            base_path('resources/infyom/infyom-generator-templates/')
+            'laravel_generator.path.templates_dir',
+            base_path('views/vendor/laravel-generator/')
         );
 
         $path = $templatesPath . $templateName . '.stub';
