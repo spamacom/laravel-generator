@@ -11,17 +11,17 @@ return [
 
     'path' => [
 
-        'migration'         => base_path('database/migrations/'),
+        'migration'         => database_path('migrations/'),
 
         'model'             => app_path('Models/'),
 
         'datatables'        => app_path('DataTables/'),
 
+        'livewire_tables'   => app_path('Http/Livewire/'),
+
         'repository'        => app_path('Repositories/'),
 
         'routes'            => base_path('routes/web.php'),
-
-        'lang'              => base_path('resources/lang/en/lang.php'),
 
         'api_routes'        => base_path('routes/api.php'),
 
@@ -33,19 +33,27 @@ return [
 
         'api_controller'    => app_path('Http/Controllers/API/'),
 
-        'test_trait'        => base_path('tests/traits/'),
+        'api_resource'      => app_path('Http/Resources/'),
 
-        'repository_test'   => base_path('tests/'),
+        'schema_files'      => resource_path('model_schemas/'),
 
-        'api_test'          => base_path('tests/'),
+        'seeder'            => database_path('seeders/'),
 
-        'views'             => base_path('resources/views/'),
+        'database_seeder'   => database_path('seeders/DatabaseSeeder.php'),
 
-        'schema_files'      => base_path('resources/model_schemas/'),
+        'factory'           => database_path('factories/'),
 
-        'templates_dir'     => base_path('resources/infyom/infyom-generator-templates/'),
+        'view_provider'     => app_path('Providers/ViewServiceProvider.php'),
 
-        'modelJs'           => base_path('resources/assets/js/models/'),
+        'tests'             => base_path('tests/'),
+
+        'repository_test'   => base_path('tests/Repositories/'),
+
+        'api_test'          => base_path('tests/APIs/'),
+
+        'views'             => resource_path('views/'),
+
+        'menu_file'         => resource_path('views/layouts/menu.blade.php'),
     ],
 
     /*
@@ -61,15 +69,29 @@ return [
 
         'datatables'        => 'App\DataTables',
 
+        'livewire_tables'   => 'App\Http\Livewire',
+
         'repository'        => 'App\Repositories',
 
         'controller'        => 'App\Http\Controllers',
 
         'api_controller'    => 'App\Http\Controllers\API',
 
+        'api_resource'      => 'App\Http\Resources',
+
         'request'           => 'App\Http\Requests',
 
         'api_request'       => 'App\Http\Requests\API',
+
+        'seeder'            => 'Database\Seeders',
+
+        'factory'           => 'Database\Factories',
+
+        'tests'             => 'Tests',
+
+        'repository_test'   => 'Tests\Repositories',
+
+        'api_test'          => 'Tests\APIs',
     ],
 
     /*
@@ -79,7 +101,7 @@ return [
     |
     */
 
-    'templates'         => 'adminlte-templates',
+    'templates' => 'adminlte-templates',
 
     /*
     |--------------------------------------------------------------------------
@@ -88,7 +110,7 @@ return [
     |
     */
 
-    'model_extend_class' => 'Eloquent',
+    'model_extend_class' => 'Illuminate\Database\Eloquent\Model',
 
     /*
     |--------------------------------------------------------------------------
@@ -98,8 +120,8 @@ return [
     */
 
     'api_prefix'  => 'api',
-
-    'api_version' => 'v1',
+	
+	'api_version' => 'v1',
 
     /*
     |--------------------------------------------------------------------------
@@ -110,9 +132,25 @@ return [
 
     'options' => [
 
-        'softDelete' => false,
+        'soft_delete' => false,
 
-        'tables_searchable_default' => false,
+        'save_schema_file' => true,
+
+        'localized' => true,
+
+        'repository_pattern' => true,
+
+        'resources' => true,
+
+        'factory' => false,
+
+        'seeder' => false,
+
+        'swagger' => false, // generate swagger for your APIs
+
+        'tests' => false, // generate test cases for your APIs
+
+        'excluded_fields' => ['id'], // Array of columns that doesn't required while creating module
     ],
 
     /*
@@ -124,16 +162,25 @@ return [
 
     'prefixes' => [
 
-        'route' => '',  // using admin will create route('admin.?.index') type routes
+        'route' => '',  // e.g. admin or admin.shipping or admin.shipping.logistics
 
-        'path' => '',
+        'namespace' => '',  // e.g. Admin or Admin\Shipping or Admin\Shipping\Logistics
 
-        'view' => '',  // using backend will create return view('backend.?.index') type the backend views directory
-
-        'public' => '',
+        'view' => '',  // e.g. admin or admin/shipping or admin/shipping/logistics
     ],
 
     /*
+    |--------------------------------------------------------------------------
+    | Table Types
+    |
+    | Possible Options: blade, datatables, livewire
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    'tables' => 'datatables',
+	
+	/*
     |--------------------------------------------------------------------------
     | Add-Ons
     |--------------------------------------------------------------------------
@@ -176,10 +223,14 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Save model files to `App/Models` when use `--prefix`. see #208
+    | Specify custom doctrine mappings as per your need
     |--------------------------------------------------------------------------
     |
     */
-    'ignore_model_prefix' => false,
+
+    'from_table' => [
+
+        'doctrine_mappings' => [],
+    ],
 
 ];
