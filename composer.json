@@ -22,13 +22,13 @@
         "email": "me@mitul.me"
     }],
     "require": {
-        "php": "^8.1.0",
-        "illuminate/support": "^10.0",
-        "illuminate/console": "^10.0",
-        "laracasts/flash": "^3.2.2",
-        "laravelcollective/html": "^6.4",
-        "symfony/var-exporter": "^6.2.5",
-        "prettus/l5-repository": "^2.9.0"
+        "php": "^8.1|^8.2|^8.3|^8.4|^8.5",
+        "illuminate/support": "^13.39",
+        "illuminate/console": "^13.39",
+        "laracasts/flash": "^3.2.6",
+        "spatie/laravel-html": "^3.13",
+        "symfony/var-exporter": "^8.1.9",
+        "prettus/l5-repository": "^4.0.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^10.0.7",
