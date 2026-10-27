@@ -26,7 +26,7 @@
         "illuminate/support": "^9.0 || ^10.0 || ^11.0 || ^12.0 || ^13.0",
         "illuminate/console": "^9.0 || ^10.0 || ^11.0 || ^12.0 || ^13.0",
         "laracasts/flash": "^3.2.6",
-        "spamacom/laravel-html": "dev-master",
+        "spamacom/laravel-html": "^1.0",
         "symfony/var-exporter": "^8.1.9",
         "prettus/l5-repository": "^4.0.0"
     },
